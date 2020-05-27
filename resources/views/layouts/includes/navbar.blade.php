@@ -69,7 +69,7 @@
                   @foreach (auth()->user()->unReadNotifications as $notification)
                     <li><!-- start notification -->
                       <a href="#">
-                        <i class="fa fa-users text-aqua"></i> {{ $notification->data['key2'] }}
+                        <i class="fa fa-users text-aqua"></i> {{ $notification->data['title'] }}
                       </a>
                     </li>
                   @endforeach

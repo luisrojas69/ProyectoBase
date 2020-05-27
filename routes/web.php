@@ -21,11 +21,12 @@ Route::get('/', function () {
 });
 
 Route::get('/sendmail', function () {
-	User::find(1)->notify(new SystemNotifications);
+	$message = [ 'title' => "Este es el Titulo", 'body' => "Este es el Contenido" ];
+	User::find(1)->notify(new SystemNotifications($message));
 
 	//Enviar a multiples
-	// $users = User::first();
- //    Notification::send($users, new SystemNotifications);
+   // $users = User::all();
+   // Notification::send($users, new SystemNotifications($message));
     return redirect()->route('home')->with('success', 'Notification was Sended');
 });
 

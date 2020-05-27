@@ -12,14 +12,16 @@ class SystemNotifications extends Notification implements ShouldQueue
         
         use Queueable;
 
+    public $message;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(array $message)
     {
-        //
+        $this->message = $message;
     }
 
     /**
@@ -58,8 +60,8 @@ class SystemNotifications extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'data' => 'Esta es mi primera notificacion',
-            'key2' => 'Esta es otra descripcion'
+            'title' => $this->message['title'],
+            'body' => $this->message['body']
         ];
     }
 }
