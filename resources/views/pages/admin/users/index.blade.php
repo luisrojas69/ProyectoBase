@@ -58,7 +58,7 @@
 
               <td class="text-center">{{ $user->last_login != null ? $user->last_login->diffForHumans() : '-' }}</td>
 
-              <td>
+              <td class="text-center">
                 <a href="{{ route('user.edit', $user->id) }}"><span class="label label-primary"><i class="fa fa-pencil"></i></span></a>
                 
                 <a 
@@ -88,19 +88,4 @@
 
 @push('additionals-scripts')
   @include('layouts.messages.toast-message')
-  <!-- DataTables -->
-
-<script>
-  $(function () {
-    $('#example1').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : true,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : true
-    })
-  })
-</script>
-
 @endpush

@@ -30,6 +30,7 @@
       <li class="header text-center">MENU</li>
       <!-- Optionally, you can add icons to the links -->
       <li class="{{ Request::is('home') ? 'active' : '' }}"><a href="{{ route('home') }}"><i class="fa fa-home"></i> <span>Inicio</span></a></li>
+      <li class="{{ Request::is('admin/user*') ? 'active' : '' }}"><a href="{{ route('user.index') }}"><i class="fa fa-user"></i> <span>Usuarios</span></a></li>
       <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
       <li class="treeview">
         <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>

@@ -12,6 +12,10 @@
 
 @elseif (session()->has('error'))
 
-  <script>toastr.error("{{ session('error') }}")</script>  
+  <script>toastr.error("{{ session('error') }}")</script> 
+
+@elseif (session()->has('status'))
+
+	<script>toastr.success("{{ session('status') }}")</script>  
 
 @endif

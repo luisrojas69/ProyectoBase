@@ -1,7 +1,9 @@
 <?php
 
+use App\Notifications\SystemNotifications;
+use App\User;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,7 +16,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+	User::find(1)->notify(new SystemNotifications);
     return view('welcome');
+});
+
+Route::get('/sendmail', function () {
+	User::find(1)->notify(new SystemNotifications);
+
+	//Enviar a multiples
+	// $users = User::first();
+ //    Notification::send($users, new SystemNotifications);
+    return redirect()->route('home')->with('success', 'Notification was Sended');
 });
 
 Auth::routes();

@@ -1,5 +1,7 @@
 @extends('layouts.master-login')
 
+@section('title-page', 'Recuperar Password')
+
 @section('content')
 
 <div class="login-box">

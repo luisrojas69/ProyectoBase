@@ -23,12 +23,7 @@
         </div>
 
         <div class="box-body">
-            @if (session('status'))
-                <div class="alert alert-success" role="alert">
-                    {{ session('status') }}
-                </div>
-            @endif
-
+            
             Bienvenido.! {{ auth()->user()->name  }} | 
               <small class="text-muted">
                 @if (auth()->user()->last_logout != NULL)
@@ -47,3 +42,7 @@
       </div>
 
 @endsection
+
+@push('additionals-scripts')
+  @include('layouts.messages.toast-message')
+@endpush

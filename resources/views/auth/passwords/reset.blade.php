@@ -1,66 +1,91 @@
+
 @extends('layouts.master-login')
+
+@section('title-page', 'Reset Password')
 
 @section('content')
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
-                        @csrf
+<div class="login-box">
+  <div class="login-logo">
+    <a href="/"><b>{{ config('app.name') }}</b></a>
+  </div>
 
-                        <input type="hidden" name="token" value="{{ $token }}">
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">Reset Password</p>
+    @include('layouts.messages.flash-message')
+    
+   <form method="POST" action="{{ route('password.update') }}">
+    @csrf
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+    <input type="hidden" name="token" value="{{ $token }}">
+      <div class="form-group has-feedback @error('email') has-error @enderror">
+        
+        <input 
+          id="email" 
+          type="email" 
+          class="form-control" 
+          name="email"
+          placeholder="Introduce tu email" 
+          value="{{ $email ?? old('email') }}"
+          required 
+          autocomplete="email" 
+          autofocus>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+        @error('email')
+              <span class="help-block" role="alert">
+                  {{ $message }}
+              </span>
+        @enderror
 
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+      </div>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+      <div class="form-group has-feedback @error('password') has-error @enderror">
+        <input 
+          id="password" 
+          type="password" 
+          class="form-control" 
+          name="password"
+          placeholder="Introduce tu nuevo password"
+          autocomplete="new-password">
 
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+        @error('password')
+            <span class="help-block" role="alert">
+                {{ $message }}
+            </span>
+        @enderror
+ 
+      </div>
 
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
+      <div class="form-group has-feedback">
+        <input
+          for="password-confirm" 
+          id="password-confirm" 
+          type="password" 
+          class="form-control" 
+          name="password_confirmation"
+          placeholder="Confirmar password"
+          autocomplete="new-password">
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+        <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+ 
+      </div>
+      <div class="row">
+        <!-- /.col -->
+        <div class="col-xs-6">
+          <button type="submit" class="btn btn-primary btn-block btn-flat">Reset Password</button>
         </div>
-    </div>
+        <!-- /.col -->
+      </div>
+    </form>
+
+  </div>
+  <!-- /.login-box-body -->
 </div>
+
 @endsection

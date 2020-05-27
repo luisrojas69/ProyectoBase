@@ -54,28 +54,32 @@
         <!-- /.messages-menu -->
 
         <!-- Notifications Menu -->
-        <li class="dropdown notifications-menu">
-          <!-- Menu toggle button -->
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="fa fa-bell-o"></i>
-            <span class="label label-warning">10</span>
-          </a>
-          <ul class="dropdown-menu">
-            <li class="header">Tienes 10 notificaciones</li>
-            <li>
-              <!-- Inner Menu: contains the notifications -->
-              <ul class="menu">
-                <li><!-- start notification -->
-                  <a href="#">
-                    <i class="fa fa-users text-aqua"></i> Notificación N° 1
-                  </a>
-                </li>
-                <!-- end notification -->
-              </ul>
-            </li>
-            <li class="footer"><a href="#">Ver todas</a></li>
-          </ul>
-        </li>
+        @if (auth()->user()->unReadNotifications->count() > 0)
+          <li class="dropdown notifications-menu">
+            <!-- Menu toggle button -->
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-bell-o"></i>
+              <span class="label label-warning">{{ auth()->user()->unReadNotifications->count() }}</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="header">Tienes {{ auth()->user()->unReadNotifications->count() }} notificaciones</li>
+              <li>
+                <!-- Inner Menu: contains the notifications -->
+                <ul class="menu">
+                  @foreach (auth()->user()->unReadNotifications as $notification)
+                    <li><!-- start notification -->
+                      <a href="#">
+                        <i class="fa fa-users text-aqua"></i> {{ $notification->data['key2'] }}
+                      </a>
+                    </li>
+                  @endforeach
+                  <!-- end notification -->
+                </ul>
+              </li>
+              <li class="footer"><a href="#">Ver todas</a></li>
+            </ul>
+          </li>
+        @endif
         <!-- Tasks Menu -->
         {{-- <li class="dropdown tasks-menu">
           <!-- Menu Toggle Button -->
