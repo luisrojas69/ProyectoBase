@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\User;
 use App\UserStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
@@ -19,7 +20,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::with('status')->where('id', '!=', Auth::user()->id)->get();
+        return view('pages.admin.users.index', compact('users'));
     }
 
     /**
@@ -86,9 +88,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete(); 
+        return redirect()->route('user.index')->with('success', 'Usuario ha sido Eliminado');
     }
 
     //Export to excel

@@ -11,6 +11,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+
         App\User::create([
             'name' => 'Luis Rojas',
             'email' => 'lrojas@tubrica.com',
@@ -18,5 +19,7 @@ class UserSeeder extends Seeder
             'status_id' => 1,
             'password' => 12345678,
         ]);
+        
+        factory(App\User::class, 20)->create();
     }
 }

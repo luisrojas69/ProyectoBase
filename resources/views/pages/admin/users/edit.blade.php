@@ -40,9 +40,17 @@
             <b>Miembro desde</b> <a class="pull-right">{{ $user->created_at->format('m-Y') }}</a>
           </li>
         </ul>
-        <button type="button" class="btn btn-success btn-delete" id="btn-id">
-          Launch SweetAlert
-        </button>
+        
+        <a href="javascript:void(0)" id="{{ $user->id }}" class="btn btn-danger btn-block btn-delete"><b>Eliminar Usuario</b></a>
+        
+        <form action="{{ route('user.destroy', $user) }}" id="form-destroy-{{$user->id }}" method="POST">
+          @csrf @method('DELETE')
+        </form>
+
+        <hr>
+
+        <a href="{{ route('user.index') }}" class="btn btn-primary btn-block"><b>Ir a lista de Usuarios</b></a>
+
       </div>
       <!-- /.box-body -->
     </div>
@@ -297,7 +305,7 @@
 
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-danger">Editar Usuario</button>
+                <button type="submit" class="btn btn-primary">Editar Usuario</button>
               </div>
             </div>
           </form>

@@ -6,7 +6,7 @@ $(document).ready(function(){
 		let id = (this.id);
 		swal = require('sweetalert');
 		swal({
-		  title: "Está seguro? "+id,
+		  title: "Está seguro?",
 		  text: "Una vez eliminado, no podra recuperar este registro!",
 		  icon: "warning",
 		  buttons: true,
@@ -14,9 +14,9 @@ $(document).ready(function(){
 		})
 		.then((willDelete) => {
 		  if (willDelete) {
-		   	$("#form-edit").submit();
+		   	$("#form-destroy-"+id).submit();
 		  } else {
-		    swal("Your imaginary file is safe!");
+		    //swal("Your imaginary file is safe!");
 		  }
 		});
 

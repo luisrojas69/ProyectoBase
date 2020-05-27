@@ -46,6 +46,8 @@ toastr.options = {
   "hideMethod": "fadeOut"
 }
 
+datable = require('admin-lte/bower_components/datatables.net-bs/js/dataTables.bootstrap.js');
+
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**

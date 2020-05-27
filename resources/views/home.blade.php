@@ -29,8 +29,15 @@
                 </div>
             @endif
 
-            Bienvenido.! {{ auth()->user()->name  }} | <small class="text-muted">Ultimo Acceso: 
-              {{ auth()->user()->last_logout->diffForHumans() }}</small>
+            Bienvenido.! {{ auth()->user()->name  }} | 
+              <small class="text-muted">
+                @if (auth()->user()->last_logout != NULL)
+                  Ultimo Acceso: {{ auth()->user()->last_logout->diffForHumans() }}
+                @else
+                  Esta es su primera vez en el Sistema  
+                @endif
+
+              </small>
         </div>
 
         <div class="box-footer">
