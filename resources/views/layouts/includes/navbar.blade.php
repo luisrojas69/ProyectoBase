@@ -17,106 +17,58 @@
     <!-- Navbar Right Menu -->
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
-{{--         <!-- Messages: style can be found in dropdown.less-->
+       @if ($noLeidas = auth()->user()->unReadNotifications->count())
+          
         <li class="dropdown messages-menu">
-          <!-- Menu toggle button -->
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="fa fa-envelope-o"></i>
-            <span class="label label-success">4</span>
-          </a>
-          <ul class="dropdown-menu">
-            <li class="header">You have 4 messages</li>
-            <li>
-              <!-- inner menu: contains the messages -->
-              <ul class="menu">
-                <li><!-- start message -->
-                  <a href="#">
-                    <div class="pull-left">
-                      <!-- User Image -->
-                      <img src="{{ asset('adminlte/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
-                    </div>
-                    <!-- Message title and timestamp -->
-                    <h4>
-                      Support Team
-                      <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                    </h4>
-                    <!-- The message -->
-                    <p>Why not buy a new awesome theme?</p>
-                  </a>
-                </li>
-                <!-- end message -->
-              </ul>
-              <!-- /.menu -->
-            </li>
-            <li class="footer"><a href="#">See All Messages</a></li>
-          </ul>
-        </li> --}}
-        <!-- /.messages-menu -->
-
-        <!-- Notifications Menu -->
-        @if (auth()->user()->unReadNotifications->count() > 0)
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+              <i class="fa fa-bell-o"></i>
+              <span class="label label-success">{{ $noLeidas }}</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="header">Tienes {{ $noLeidas }} 
+                {{ $noLeidas > 1 ? 'notificaciones' : 'notificación'}}
+              <li>
+                <!-- inner menu: contains the actual data -->
+                <ul class="menu">
+                  @foreach (auth()->user()->unReadNotifications as $notification)
+                    <li><!-- start message -->
+                      <a 
+                        href="" 
+                        data-toggle="modal"
+                        data-target="#modal-notifications"
+                        data-title="{{ $notification->data['title'] }}"
+                        data-sender="{{ $notification->data['sender'] }}"
+                        data-created_at="{{ $notification->created_at->format('d-m-Y') }}"
+                        data-body="{!! $notification->data['body'] !!}">
+                        <div class="pull-left">
+                          <img src="{{ asset('adminlte/img/user2-160x160.jpg') }}" class="img-circle" alt="img">
+                        </div>
+                        <h4>
+                          {{ $notification->data['title'] }}
+                          <small><i class="fa fa-clock-o"></i> {{ $notification->created_at->diffForHumans() }}</small>
+                        </h4>
+                        <small>Enviado por: {{ $notification->data['sender'] }}</small>
+                      </a>
+                    </li>
+                  @endforeach
+                  <!-- end message -->
+                </ul>
+              </li>
+              <li class="footer"><a href="{{ route('message.index') }}">Ver todas</a></li>
+            </ul>
+          </li>
+       @else
           <li class="dropdown notifications-menu">
             <!-- Menu toggle button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
-              <span class="label label-warning">{{ auth()->user()->unReadNotifications->count() }}</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">Tienes {{ auth()->user()->unReadNotifications->count() }} notificaciones</li>
-              <li>
-                <!-- Inner Menu: contains the notifications -->
-                <ul class="menu">
-                  @foreach (auth()->user()->unReadNotifications as $notification)
-                    <li><!-- start notification -->
-                      <a href="#">
-                        <i class="fa fa-users text-aqua"></i> {{ $notification->data['title'] }}
-                      </a>
-                    </li>
-                  @endforeach
-                  <!-- end notification -->
-                </ul>
-              </li>
-              <li class="footer"><a href="#">Ver todas</a></li>
+              <li class="header text-center text-red">Usted no tiene nuevas notificaciones</li>
+              <li class="footer"><a href="#">Ver notificaciones leidas</a></li>
             </ul>
           </li>
         @endif
-        <!-- Tasks Menu -->
-        {{-- <li class="dropdown tasks-menu">
-          <!-- Menu Toggle Button -->
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="fa fa-flag-o"></i>
-            <span class="label label-danger">9</span>
-          </a>
-          <ul class="dropdown-menu">
-            <li class="header">You have 9 tasks</li>
-            <li>
-              <!-- Inner menu: contains the tasks -->
-              <ul class="menu">
-                <li><!-- Task item -->
-                  <a href="#">
-                    <!-- Task title and progress text -->
-                    <h3>
-                      Design some buttons
-                      <small class="pull-right">20%</small>
-                    </h3>
-                    <!-- The progress bar -->
-                    <div class="progress xs">
-                      <!-- Change the css width attribute to simulate progress -->
-                      <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar"
-                           aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                        <span class="sr-only">20% Complete</span>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <!-- end task item -->
-              </ul>
-            </li>
-            <li class="footer">
-              <a href="#">View all tasks</a>
-            </li>
-          </ul>
-        </li> --}}
         <!-- User Account Menu -->
         <li class="dropdown user user-menu">
           <!-- Menu Toggle Button -->
@@ -137,7 +89,7 @@
               </p>
             </li>
             <!-- Menu Body -->
-            {{-- <li class="user-body">
+            <li class="user-body">
               <div class="row">
                 <div class="col-xs-4 text-center">
                   <a href="#">Followers</a>
@@ -150,7 +102,7 @@
                 </div>
               </div>
               <!-- /.row -->
-            </li> --}}
+            </li>
             <!-- Menu Footer-->
             <li class="user-footer">
               <div class="pull-left">
@@ -179,3 +131,66 @@
     </div>
   </nav>
 </header>
+
+  <!-- /.modal -->
+    <div class="modal fade" id="modal-notifications">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="modal-title"></h4>
+          </div>
+          <div class="modal-body">
+            <div class="post">
+              <div class="user-block">
+                <img class="img-circle img-bordered-sm" src="{{ asset('img/avatars/'.auth()->user()->avatar) }}" alt="user image">
+                    <span class="username">
+                      <a href="#" id="modal-sender"></a>
+                    </span>
+                <span class="description" id="modal-created_at"></span>
+              </div>
+              <!-- /.user-block -->
+              <p id="modal-body"></p>
+              <ul class="list-inline">
+                    <li></li>
+                    <li class="pull-right">
+                      <a href="#" class="link-black text-sm"><i class="fa fa-envelope-o margin-r-5"></i>Marcar como Ledia</a></li>
+                  </ul>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+
+@push('additionals-scripts')
+  <script>
+
+    $(function(){
+          $('#modal-notifications').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget) // Button that triggered the modal
+          var title = button.data('title')
+          var body  = button.data('body')
+          var sender  = button.data('sender')
+          var created_at  = button.data('created_at')
+          // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+          // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+          var modal = $(this)
+          modal.find('#modal-title').text(title)
+          modal.find('#modal-body').html(body)
+          modal.find('#modal-sender').text(sender)
+          modal.find('#modal-created_at').text(created_at)
+
+  })
+
+    });
+    
+  </script>
+@endpush

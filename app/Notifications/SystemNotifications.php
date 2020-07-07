@@ -19,7 +19,7 @@ class SystemNotifications extends Notification implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(array $message)
+    public function __construct($message)
     {
         $this->message = $message;
     }
@@ -59,9 +59,6 @@ class SystemNotifications extends Notification implements ShouldQueue
      */
     public function toArray($notifiable)
     {
-        return [
-            'title' => $this->message['title'],
-            'body' => $this->message['body']
-        ];
+        return $this->message;
     }
 }

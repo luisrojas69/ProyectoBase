@@ -7,12 +7,11 @@ window._ = require('lodash');
  */
 
 try {
-	window.Popper = require('popper.js').default;
+    window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
     require('admin-lte');
-
 } catch (e) {}
 
 /**
@@ -23,12 +22,13 @@ try {
 
 window.axios = require('axios');
 
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
 //Toastr 
 toastr = require('toastr');
 
+//Datatables
 datatable = require('admin-lte/bower_components/datatables.net-bs/js/dataTables.bootstrap.js');
-
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

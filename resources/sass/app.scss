@@ -4,6 +4,9 @@
 // Variables
 @import 'variables';
 
+// Bootstrap
+//@import '~bootstrap/scss/bootstrap';
+
 // AdminLTE
 @import '~admin-lte/bower_components/bootstrap/dist/css/bootstrap.min.css';
 @import '~admin-lte/bower_components/font-awesome/css/font-awesome.min.css';
@@ -12,5 +15,3 @@
 @import '~admin-lte/dist/css/AdminLTE.min.css';
 @import '~admin-lte/dist/css/skins/skin-blue.min.css';
 @import "toastr";
-
-
